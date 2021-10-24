@@ -10,8 +10,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "centos"
-    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+#    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+#    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
     vb.memory = 2048
     vb.cpus = 2

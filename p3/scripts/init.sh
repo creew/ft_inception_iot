@@ -9,4 +9,3 @@ repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
 yum install -y kubectl
-wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
