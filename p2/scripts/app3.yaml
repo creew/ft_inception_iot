@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-three
+  labels:
+    app: hello-kubernetes3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-kubernetes3
+  template:
+    metadata:
+      labels:
+        app: hello-kubernetes3
+    spec:
+      containers:
+      - name: hello-kubernetes3
+        image: paulbouwer/hello-kubernetes:1.10
+        ports:
+        - containerPort: 83

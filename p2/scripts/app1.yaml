@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-one
+  labels:
+    app: hello-kubernetes1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-kubernetes1
+  template:
+    metadata:
+      labels:
+        app: hello-kubernetes1
+    spec:
+      containers:
+      - name: hello-kubernetes1
+        image: paulbouwer/hello-kubernetes:1.10
+        ports:
+        - containerPort: 80

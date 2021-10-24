@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/centos8"
+  config.vm.provider "virtualbox" do |v|
+    # v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    # v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    v.memory = 1024
+    v.cpus = 2
+  end
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  config.vm.provision "file", source: "./", destination: "/home/vagrant/p2"
+  
+  config.vm.boot_timeout = 600
+  config.vm.define "eklompusS" do |control|
+    control.vm.hostname = "eklompusS"
+    control.vm.network "private_network", ip: "192.168.56.4"
+    control.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--name", "eklompusS"]
+    end
+    control.vm.provision "shell", inline: <<-SHELL
+      export INSTALL_K3S_EXEC="--write-kubeconfig /home/vagrant/.kube/config --write-kubeconfig-mode 666 --node-external-ip 192.168.42.110 --tls-san 192.168.42.110"
+      curl -sfL https://get.k3s.io | sh -
+    SHELL
+    # control.vm.provision "shell", inline: <<-SHELL
+    #   kubectl create -f ./scripts/app3.yaml
+    #   kubectl create -f ./scripts/app1.yaml
+    #   kubectl create -f ./scripts/app2.yaml
+    # SHELL
+  end
+end
