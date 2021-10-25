@@ -18,4 +18,4 @@ spec:
       - name: hello-kubernetes2
         image: paulbouwer/hello-kubernetes:1.10
         ports:
-        - containerPort: 82
+        - containerPort: 8080

@@ -10,8 +10,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "centos"
-#    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-#    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
     vb.memory = 2048
     vb.cpus = 2
@@ -20,6 +20,8 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant"
   
   config.vm.provision "file", source: "p1", destination: "/home/vagrant/p1"
+  config.vm.provision "file", source: "p2", destination: "/home/vagrant/p2"
+  config.vm.provision "file", source: "p3", destination: "/home/vagrant/p3"
   config.vm.provision "shell", inline: <<-SHELL
     yum install -y https://download.virtualbox.org/virtualbox/6.1.26/VirtualBox-6.1-6.1.26_145957_el8-1.x86_64.rpm
     yum install -y yum-utils
