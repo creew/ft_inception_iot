@@ -25,7 +25,6 @@ Vagrant.configure("2") do |config|
       curl -sfL https://get.k3s.io | sh -
     SHELL
     control.vm.provision "shell", inline: <<-SHELL
-      kubectl apply -f ./scripts/svc.yaml
       kubectl apply -f ./scripts/app3.yaml
       kubectl apply -f ./scripts/app1.yaml
       kubectl apply -f ./scripts/app2.yaml

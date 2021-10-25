@@ -17,9 +17,6 @@ spec:
       containers:
       - name: hello-kubernetes1
         image: paulbouwer/hello-kubernetes:1.10
-        env: 
-          - name: MESSAGE:
-            value: Hello from app1
         ports:
         - containerPort: 8080
 ---
