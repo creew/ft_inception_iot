@@ -29,6 +29,7 @@ Vagrant.configure("2") do |config|
       cp ${NODE_TOKEN} /home/vagrant/
       chown vagrant:vagrant /home/vagrant/node-token
     SHELL
+    control.vm.provision "shell", path: "scripts/init_bash.sh"
   end
   config.vm.define "eklompusSW" do |control|
     control.vm.hostname = "eklompusSW"
@@ -41,5 +42,6 @@ Vagrant.configure("2") do |config|
       scp -i /home/vagrant/.ssh/master.key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no vagrant@192.168.42.110:/home/vagrant/node-token /home/vagrant/
       curl -sfL https://get.k3s.io | K3S_URL=https://192.168.42.110:6443 K3S_TOKEN=$(cat /home/vagrant/node-token) sh -
     SHELL
+    control.vm.provision "shell", path: "scripts/init_bash.sh"
   end
 end
