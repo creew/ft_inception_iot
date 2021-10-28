@@ -24,6 +24,12 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "p2", destination: "/home/vagrant/p2"
   config.vm.provision "file", source: "p3", destination: "/home/vagrant/p3"
   config.vm.provision "shell", inline: <<-SHELL
+    #dnf groupinstall -y 'Server with GUI'
+    #yum install -y 'xorg*'
+    #yum remove -y initial-setup initial-setup-gui
+    #systemctl isolate graphical.target
+    #systemctl set-default graphical.target
+
     yum install -y https://download.virtualbox.org/virtualbox/6.1.26/VirtualBox-6.1-6.1.26_145957_el8-1.x86_64.rpm
     yum install -y yum-utils
     yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
