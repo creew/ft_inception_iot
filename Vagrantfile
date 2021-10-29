@@ -11,8 +11,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "centos"
-    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    #vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    #vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
     vb.memory = 3072
     vb.cpus = 2
@@ -40,4 +40,6 @@ Vagrant.configure("2") do |config|
     systemctl start docker
     usermod -aG docker vagrant  
   SHELL
+  config.vm.provision "shell", path: "p3/scripts/init.sh"
+  config.vm.provision "shell", path: "p3/scripts/init_bash.sh"
 end
