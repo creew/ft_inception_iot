@@ -5,3 +5,5 @@ wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bas
 k3d cluster create mycluster -p "8080:80@loadbalancer" -p "8082:443@loadbalancer" -p "8888:30080@server:0"
 kubectl create ns argocd
 kubectl create ns dev
+curl https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml | sed -e 's/\( *\)- argocd-server/&\n\1- --insecure/' | kubectl apply -n argocd -f -
+kubectl apply -n argocd -f ../confs/ingress.yaml
