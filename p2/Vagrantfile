@@ -6,7 +6,9 @@ Vagrant.configure("2") do |config|
   config.vm.box_version = "3.4.4"
 
   config.vm.provider "virtualbox" do |v|
-    v.memory = 1024
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    v.memory = 2024
     v.cpus = 2
   end
   config.vm.synced_folder ".", "/vagrant", disabled: true
@@ -23,15 +25,13 @@ Vagrant.configure("2") do |config|
     control.vm.provision "shell", inline: <<-SHELL
       export INSTALL_K3S_EXEC="--write-kubeconfig /home/vagrant/.kube/config --write-kubeconfig-mode 666 --node-external-ip 192.168.42.110 --tls-san 192.168.42.110"
       curl -sfL https://get.k3s.io | sh -
+      systemctl stop firewalld
+      systemctl disable firewalld
       sleep 25
       echo "LOADING..."
-      sleep 25
-    SHELL
+      SHELL
     control.vm.provision "shell", inline: <<-SHELL
-      ls -la
-     #chmod +x ./kubectl
-     #sudo mv ./kubectl /usr/local/bin/kubectl
-      lskubectl version --client
+      /usr/local/bin/kubectl apply -f ./p2/scripts/ingress.yaml
       /usr/local/bin/kubectl apply -f ./p2/scripts/app3.yaml
       /usr/local/bin/kubectl apply -f ./p2/scripts/app1.yaml
       /usr/local/bin/kubectl apply -f ./p2/scripts/app2.yaml
