@@ -16,7 +16,7 @@ spec:
     services: 
     - name: app-two
       port: 80
-  - match: Host(`192.168.42.110`) 
+  - match: Method(`GET`)
     kind: Rule 
     services: 
     - name: app-three
