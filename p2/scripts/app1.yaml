@@ -3,19 +3,19 @@ kind: Deployment
 metadata:
   name: app-one
   labels:
-    app: hello-kubernetes1
+    app: app-one
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello-kubernetes1
+      app: app-one
   template:
     metadata:
       labels:
-        app: hello-kubernetes1
+        app: app-one
     spec:
       containers:
-      - name: hello-kubernetes1
+      - name: hello-kubernetes
         image: paulbouwer/hello-kubernetes:1.10
         ports:
         - containerPort: 8080
@@ -23,11 +23,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-one
+  name: app-one
 spec:
   selector:
     app: app-one
   ports:
     - protocol: TCP
-      port: 8080
+      port: 80
       targetPort: 8080
