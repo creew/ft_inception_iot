@@ -3,33 +3,31 @@ kind: Deployment
 metadata:
   name: app-three
   labels:
-    app: hello-kubernetes3
+    app: app-three
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello-kubernetes3
+      app: app-three
   template:
     metadata:
       labels:
-        app: hello-kubernetes3
+        app: app-three
     spec:
-      hostNetwork: true
       containers:
-      - name: hello-kubernetes3
+      - name: hello-kubernetes
         image: paulbouwer/hello-kubernetes:1.10
         ports:
         - containerPort: 8080
-#---
-#apiVersion: v1
-#kind: Service
-#metadata:
-  #name: app-three
-#spec:
-  #type: LoadBalancer
-  #selector:
-    #app: app-three
-  #ports:
-    #- protocol: TCP
-      #port: 80
-      #targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-three
+spec:
+  selector:
+    app: app-three
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
