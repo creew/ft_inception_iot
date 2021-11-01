@@ -3,7 +3,6 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "generic/centos8"
-  config.vm.box_version = "3.4.4"
 
   config.vm.provider "virtualbox" do |v|
     v.memory = 2024
@@ -33,9 +32,7 @@ Vagrant.configure("2") do |config|
       /usr/local/bin/kubectl apply -f ./p2/scripts/app3.yaml
       /usr/local/bin/kubectl apply -f ./p2/scripts/app1.yaml
       /usr/local/bin/kubectl apply -f ./p2/scripts/app2.yaml
-      /usr/local/bin/kubectl rollout status deployment app-one
-      /usr/local/bin/kubectl rollout status deployment app-two
-      /usr/local/bin/kubectl rollout status deployment app-three
+      /usr/local/bin/kubectl wait --for=condition=complete job/helm-install-traefik-crd -n kube-system
       /usr/local/bin/kubectl apply -f ./p2/scripts/ingress.yaml
     SHELL
   end
