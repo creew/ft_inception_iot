@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
     v.memory = 2024
     v.cpus = 2
   end
-  config.vm.synced_folder ".", "/vagrant"
+  config.vm.synced_folder ".", "/vagrant_iot"
 
   config.vm.provision "file", source: "./", destination: "/home/vagrant/p2"
   
@@ -24,15 +24,13 @@ Vagrant.configure("2") do |config|
       curl -sfL https://get.k3s.io | sh -
       systemctl stop firewalld
       systemctl disable firewalld
-      sleep 25
-      echo "LOADING..."
-      SHELL
+    SHELL
     control.vm.provision "shell", path: "scripts/init_bash.sh"
     control.vm.provision "shell", inline: <<-SHELL
       /usr/local/bin/kubectl apply -f ./p2/scripts/app3.yaml
       /usr/local/bin/kubectl apply -f ./p2/scripts/app1.yaml
       /usr/local/bin/kubectl apply -f ./p2/scripts/app2.yaml
-      /usr/local/bin/kubectl wait --for=condition=complete job/helm-install-traefik-crd -n kube-system
+      /usr/local/bin/kubectl wait --for=condition=complete job/helm-install-traefik-crd -n kube-system --timeout=120s
       /usr/local/bin/kubectl apply -f ./p2/scripts/ingress.yaml
     SHELL
   end
