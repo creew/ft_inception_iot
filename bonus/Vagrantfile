@@ -16,9 +16,9 @@ Vagrant.configure("2") do |config|
   
   config.vm.synced_folder ".", "/vagrant_iot"
   
-  config.vm.provision "file", source: "./p1", destination: "/home/vagrant/"
-  config.vm.provision "file", source: "./p2", destination: "/home/vagrant/"
-  config.vm.provision "file", source: "./p3", destination: "/home/vagrant/"
+  config.vm.provision "file", source: "./../p1", destination: "/home/vagrant/"
+  config.vm.provision "file", source: "./../p2", destination: "/home/vagrant/"
+  config.vm.provision "file", source: "./../p3", destination: "/home/vagrant/"
   config.vm.provision "shell", inline: <<-SHELL
     export DEBIAN_FRONTEND=noninteractive
     apt-get update && apt-get install ca-certificates curl gnupg lsb-release
@@ -40,6 +40,6 @@ Vagrant.configure("2") do |config|
     echo "192.168.42.110  app2.com" >> /etc/hosts 
     echo "192.168.42.110  app3.com" >> /etc/hosts
   SHELL
-  config.vm.provision "shell", path: "p3/scripts/init_k8s.sh"
-  config.vm.provision "shell", path: "p3/scripts/init_bash.sh"
+  config.vm.provision "shell", path: "./../p3/scripts/init_k8s.sh"
+  config.vm.provision "shell", path: "./../p3/scripts/init_bash.sh"
 end
